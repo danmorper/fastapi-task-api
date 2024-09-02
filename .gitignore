@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Env
+bin/
+lib/
+include/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Thumbnails
+.Thumbnails/
