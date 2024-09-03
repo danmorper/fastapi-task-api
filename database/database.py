@@ -1,10 +1,18 @@
+import os
+from dotenv import load_dotenv
+
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-user = "danielmoreno"
-password = "da.ni.el."
-host = "localhost"
-database = "tasks"
+# Load environment variables from .env file
+load_dotenv()
+
+# Retrieve database configuration from environment variables
+user = os.getenv("DB_USER", "default_user")
+password = os.getenv("DB_PASSWORD", "default_password")
+host = os.getenv("DB_HOST", "localhost")
+database = os.getenv("DB_NAME", "default_db_name")
+
 DATABASE_URL = f"postgresql+asyncpg://{user}:{password}@{host}/{database}"
 
 # Create the engine

@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
@@ -12,9 +15,11 @@ from database import database
 from models import models
 from schemas import UserCreate, Token, TokenData, TaskCreate
 # Constants for JWT
-SECRET_KEY = "your-secret-key"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+# Load environment variables
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY", "default-unsafe-key") # If SECRET_KEY is not set, use "default-unsafe-key" but it's not safe
 
 # FastAPI instance
 app = FastAPI()
@@ -28,12 +33,15 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # Utility functions
 def verify_password(plain_password, hashed_password):
+    """Given a plain password and a hashed password, verify if the plain password matches the hashed password return a boolean"""
     return pwd_context.verify(plain_password, hashed_password)
 
 def get_password_hash(password):
+    """Given a password, hash it and return the hashed password"""
     return pwd_context.hash(password)
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
+    """Given a data payload and an optional expiration delta, create an access token"""
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.now(tz=timezone.utc) + expires_delta

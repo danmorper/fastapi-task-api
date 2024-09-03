@@ -19,3 +19,6 @@ include/
 
 # Thumbnails
 .Thumbnails/
+
+# Environment variables
+.env
