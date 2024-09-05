@@ -180,16 +180,6 @@ async def get_task(
         raise HTTPException(status_code=404, detail="Task not found")
     return task
 
-@app.get("/tasks/{task_id}", response_model=TaskCreate)
-async def get_task(
-    task_id: int,
-    db: AsyncSession = Depends(database.get_db),
-    current_user: models.User = Depends(get_current_user)
-):
-    task = await db.get(models.Task, task_id)
-    if task is None or task.owner_id != current_user.id:
-        raise HTTPException(status_code=404, detail="Task not found")
-    return task
 
 @app.put("/tasks/{task_id}", response_model=TaskCreate)
 async def update_task(
