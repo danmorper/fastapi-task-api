@@ -10,6 +10,7 @@ __pycache__/
 bin/
 lib/
 include/
+pyvenv.cfg
 
 # VS Code
 .vscode/
